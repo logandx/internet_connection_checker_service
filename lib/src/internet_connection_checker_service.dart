@@ -9,17 +9,30 @@ import 'internet_connection_status.dart';
 class InternetConnectionCheckerService {
   InternetConnectionCheckerService._();
 
+  /// Factory constructor to create a singleton instance of [InternetConnectionCheckerService].
+  ///
+  /// This factory constructor ensures that only one instance of the
+  /// `InternetConnectionCheckerService` is created and shared across the
+  /// application.
   factory InternetConnectionCheckerService() {
     _singleton ??= InternetConnectionCheckerService._();
     return _singleton!;
   }
 
   static InternetConnectionCheckerService? _singleton;
-
-  InternetConnectionStatus? get currentStatus => _currentStatus;
-
+  
   InternetConnectionStatus? _currentStatus;
 
+  /// Get the current internet connection status.
+  InternetConnectionStatus? get currentStatus => _currentStatus;
+
+  /// Check if internet access is available through specified URLs.
+  ///
+  /// This method takes a list of [InternetConnectionOptions] and checks if
+  /// internet access is available by making requests to the provided URLs.
+  ///
+  /// Returns `true` if internet access is available through all specified URLs,
+  /// otherwise returns `false`.
   Future<bool> hasInternetAccess({
     required List<InternetConnectionOptions> optionURLs,
   }) async {
@@ -34,30 +47,34 @@ class InternetConnectionCheckerService {
     return false;
   }
 
+  /// Stream that emits changes in internet connection status.
+  ///
+  /// This stream provides real-time updates on the internet connection status.
+  /// When the status changes, it emits the new status.
   Stream<InternetConnectionStatus> onInternetConnectionStatusChanged({
     required List<InternetConnectionOptions> optionURLs,
   }) async* {
-    final sourceStream = _connectionStatusChanged();
+    final sourceStream = Connectivity()
+        .onConnectivityChanged
+        .map(_mapInternetConnectionStatus)
+        .distinct()
+        .asBroadcastStream();
     await for (final event in sourceStream) {
       if (_currentStatus != event) {
-        switch (event) {
-          case InternetConnectionStatus.connected:
-            final hasAccess = await hasInternetAccess(optionURLs: optionURLs);
-            if (hasAccess) {
-              yield event;
-            } else {
-              yield InternetConnectionStatus.disconnected;
-            }
-            break;
-          case InternetConnectionStatus.disconnected:
-            yield event;
-            break;
+        final hasAccess = await hasInternetAccess(optionURLs: optionURLs);
+        if (hasAccess) {
+          yield InternetConnectionStatus.connected;
+        } else {
+          yield InternetConnectionStatus.disconnected;
         }
       }
       _currentStatus = event;
     }
   }
 
+  /// Check internet access by making a request to a URL.
+  ///
+  /// Returns `true` if internet access is available, otherwise `false`.
   Future<bool> _hasReachabilityNetwork(
     InternetConnectionOptions options,
   ) async {
@@ -70,6 +87,9 @@ class InternetConnectionCheckerService {
     }
   }
 
+  /// Map [ConnectivityResult] to [InternetConnectionStatus].
+  ///
+  /// Returns the corresponding [InternetConnectionStatus] based on the [event].
   InternetConnectionStatus _mapInternetConnectionStatus(
     ConnectivityResult event,
   ) {
@@ -81,13 +101,5 @@ class InternetConnectionCheckerService {
       default:
         return InternetConnectionStatus.disconnected;
     }
-  }
-
-  Stream<InternetConnectionStatus> _connectionStatusChanged() {
-    final internetConnectionStream = Connectivity()
-        .onConnectivityChanged
-        .map(_mapInternetConnectionStatus)
-        .distinct();
-    return internetConnectionStream.asBroadcastStream();
   }
 }
