@@ -83,7 +83,7 @@ class InternetConnectionCheckerService {
       final dio = Dio();
       final response = await dio.get(options.uri).timeout(options.timeout);
       return response.data != null;
-    } on SocketException {
+    } catch (e) {
       return false;
     }
   }
