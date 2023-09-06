@@ -21,7 +21,7 @@ For more information, visit the [GitHub repository](https://github.com/logandx/i
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+Check the current internet connection status: disconnected or connected.
 
 ## Getting started
 
@@ -60,6 +60,4 @@ final hasAccess = await internetConnectionChecker.hasInternetAccess(
 
 ## Additional information
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+I've research for some packages that are depended on `connectivity_plus`, and I found that they're not working correctly while determining the actual internet connection changes. So I tried to make this package. The idea is based on `internet_connection_checker`

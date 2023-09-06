@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
@@ -44,7 +45,7 @@ class InternetConnectionCheckerService {
       );
       return result.every((element) => element == true);
     }
-    return false;
+    return true;
   }
 
   /// Stream that emits changes in internet connection status.
@@ -82,7 +83,7 @@ class InternetConnectionCheckerService {
       final dio = Dio();
       final response = await dio.get(options.uri).timeout(options.timeout);
       return response.data != null;
-    } on TimeoutException {
+    } on SocketException {
       return false;
     }
   }
