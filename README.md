@@ -11,7 +11,7 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages).
 -->
 
-# A service for checking internet connection status and accessibility
+# **Introduction**
 
 This package provides methods and streams for checking the current
 internet connection status and whether internet access is available
@@ -19,16 +19,12 @@ through specified URLs.
 
 For more information, visit the [GitHub repository](https://github.com/logandx/internet_connection_checker_service).
 
-## Features
+## **Features**
 
-Check the current internet connection status: disconnected or connected.
+- Check the current internet connection status: disconnected or connected.
+- Determine the internet connection on specific URLs.
 
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
+## **Usage**
 
 To use this package, make sure to include it in your `pubspec.yaml` file:
 
@@ -58,6 +54,8 @@ final hasAccess = await internetConnectionChecker.hasInternetAccess(
 );
 ```
 
-## Additional information
+## **Additional information**
 
-I've research for some packages that are depended on `connectivity_plus`, and I found that they're not working correctly while determining the actual internet connection changes. So I tried to make this package. The idea is based on `internet_connection_checker`
+I conducted research on packages that rely on `connectivity_plus` and noticed that they do not accurately detect changes in internet connectivity. As a result, I decided to develop a new package inspired by `internet_connection_checker` to address these issues and provide more reliable internet connection change detection."
+
+If you have more specific details or questions related to creating this package or need further assistance, please feel free to ask.
