@@ -17,8 +17,6 @@ This package provides methods and streams for checking the current
 internet connection status and whether internet access is available
 through specified URLs.
 
-For more information, visit the [GitHub repository](https://github.com/logandx/internet_connection_checker_service).
-
 ## **Features**
 
 - Check the current internet connection status: disconnected or connected.

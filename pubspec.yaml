@@ -1,5 +1,6 @@
 name: internet_connection_checker_service
 description: A service for checking internet connection status and accessibility
+homepage: https://github.com/logandx/internet_connection_checker_service
 version: 1.0.0
 
 environment:
