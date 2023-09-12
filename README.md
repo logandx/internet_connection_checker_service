@@ -20,7 +20,7 @@ through specified URLs.
 ## **Features**
 
 - Check the current internet connection status: disconnected or connected.
-- Determine the internet connection on specific URLs.
+- Determine the internet connection through specific URLs.
 
 ## **Usage**
 
@@ -36,8 +36,6 @@ Example usage:
 ```dart
 final internetConnectionChecker = InternetConnectionCheckerService();
 
-// Check the current internet connection status.
-final status = internetConnectionChecker.currentStatus;
 
 // Listen to changes in internet connection status.
 final subscription = internetConnectionChecker
