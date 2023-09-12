@@ -20,11 +20,6 @@ class InternetConnectionCheckerService {
   }
 
   static InternetConnectionCheckerService? _singleton;
-  
-  InternetConnectionStatus? _currentStatus;
-
-  /// Get the current internet connection status.
-  InternetConnectionStatus? get currentStatus => _currentStatus;
 
   /// Check if internet access is available through specified URLs.
   ///
@@ -57,18 +52,21 @@ class InternetConnectionCheckerService {
     final sourceStream = Connectivity()
         .onConnectivityChanged
         .map(_mapInternetConnectionStatus)
-        .distinct()
         .asBroadcastStream();
     await for (final event in sourceStream) {
-      if (_currentStatus != event) {
-        final hasAccess = await hasInternetAccess(optionURLs: optionURLs);
-        if (hasAccess) {
-          yield InternetConnectionStatus.connected;
-        } else {
+      switch (event) {
+        case InternetConnectionStatus.connected:
+          final hasAccess = await hasInternetAccess(optionURLs: optionURLs);
+          if (hasAccess) {
+            yield event;
+          } else {
+            yield InternetConnectionStatus.disconnected;
+          }
+          break;
+        case InternetConnectionStatus.disconnected:
           yield InternetConnectionStatus.disconnected;
-        }
+          break;
       }
-      _currentStatus = event;
     }
   }
 

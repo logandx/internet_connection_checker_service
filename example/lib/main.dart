@@ -46,20 +46,35 @@ class _MyHomePageState extends State<MyHomePage> {
       InternetConnectionCheckerService();
 
   List<InternetConnectionOptions> optionURLs = [
-    const InternetConnectionOptions(uri: 'https://google.com'),
-    const InternetConnectionOptions(uri: 'https://bing.com'),
+    const InternetConnectionOptions(
+        uri: 'https://google.com', timeout: Duration(seconds: 20)),
+    const InternetConnectionOptions(
+        uri: 'https://bing.com', timeout: Duration(seconds: 20)),
   ];
 
   @override
   void initState() {
     super.initState();
+
     _streamSubscription = internetConnectionCheckerService
         .onInternetConnectionStatusChanged(optionURLs: optionURLs)
-        .distinct()
         .listen((event) {
-      setState(() {
+      if (_lastStatus == null) {
         _lastStatus = event;
-      });
+        return;
+      }
+      if (_lastStatus != event) {
+        switch (event) {
+          case InternetConnectionStatus.connected:
+            _lastStatus = InternetConnectionStatus.connected;
+            break;
+          case InternetConnectionStatus.disconnected:
+            _lastStatus = InternetConnectionStatus.disconnected;
+            break;
+        }
+      }
+      _lastStatus = event;
+      setState(() {});
     });
   }
 
@@ -73,11 +88,13 @@ class _MyHomePageState extends State<MyHomePage> {
     BuildContext context,
   ) {
     if (_lastStatus == null) {
-      return const SizedBox.shrink();
+      return Center(
+        child: Text('$_lastStatus'),
+      );
     }
     return Center(
       child: Container(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         color: _lastStatus == InternetConnectionStatus.disconnected
             ? Colors.red
             : Colors.green,
