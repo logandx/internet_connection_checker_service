@@ -1,4 +1,3 @@
-
 library internet_connection_checker_service;
 
 export 'src/internet_connection_checker_service.dart';
