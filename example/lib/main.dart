@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-
 import 'package:internet_connection_checker_service/internet_connection_checker_service.dart';
 
 void main() {
@@ -9,7 +8,7 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -29,9 +28,9 @@ class _MyAppState extends State<MyApp> {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({
-    super.key,
+    Key? key,
     required this.title,
-  });
+  }) : super(key: key);
 
   final String title;
 
