@@ -1,14 +1,18 @@
 name: internet_connection_checker_service
 description: A service for checking internet connection status and accessibility
 homepage: https://github.com/logandx/internet_connection_checker_service
-version: 1.0.4
+issue_tracker: https://github.com/logandx/internet_connection_checker_service/issues
+version: 1.0.5
 
 environment:
-  sdk: ">=2.12.0 <4.0.0"
+  sdk: ">=2.18.0 <4.0.0"
+  flutter: ">=3.3.0"
 
 dev_dependencies:
   lints: ^3.0.0
   test: ^1.24.9
 dependencies:
+  flutter:
+    sdk: flutter
   connectivity_plus: ^5.0.1
   dio: ^5.3.3

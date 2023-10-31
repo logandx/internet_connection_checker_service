@@ -28,7 +28,7 @@ To use this package, make sure to include it in your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  internet_connection_checker_service: ^1.0.4
+  internet_connection_checker_service: ^1.0.5
 ```
 
 Example usage:
