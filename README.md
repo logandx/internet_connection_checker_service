@@ -28,7 +28,7 @@ To use this package, make sure to include it in your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  internet_connection_checker_service: ^1.0.0
+  internet_connection_checker_service: ^1.0.4
 ```
 
 Example usage:
@@ -36,17 +36,28 @@ Example usage:
 ```dart
 final internetConnectionChecker = InternetConnectionCheckerService();
 
+List<InternetConnectionOptions> optionURLs = [
+    const InternetConnectionOptions(
+      uri: 'https://google.com',
+      timeout: Duration(seconds: 20),
+    ),
+    const InternetConnectionOptions(
+      uri: 'https://bing.com',
+      timeout: Duration(seconds: 20),
+    ),
+  ];
+
 
 // Listen to changes in internet connection status.
 final subscription = internetConnectionChecker
-    .onInternetConnectionStatusChanged(optionURLs: [...])
+    .onInternetConnectionStatusChanged(optionURLs: optionURLs)
     .listen((status) {
   // Handle the internet connection status change.
 });
 
 // Check if internet access is available through specified URLs.
 final hasAccess = await internetConnectionChecker.hasInternetAccess(
-  optionURLs: [...],
+  optionURLs: optionURLs,
 );
 ```
 

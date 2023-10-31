@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker_service/internet_connection_checker_service.dart';
 
@@ -7,6 +6,7 @@ void main() {
   runApp(const MyApp());
 }
 
+// Root widget of the application
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -14,6 +14,7 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
+// State class for MyApp
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
@@ -26,6 +27,7 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
+// Widget for the main page
 class MyHomePage extends StatefulWidget {
   const MyHomePage({
     Key? key,
@@ -38,12 +40,19 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+// State class for MyHomePage
 class _MyHomePageState extends State<MyHomePage> {
+  // Subscription to internet connection status changes
   StreamSubscription<InternetConnectionStatus>? _streamSubscription;
+
+  // Stores the last known internet connection status
   InternetConnectionStatus? _lastStatus;
+
+  // InternetConnectionCheckerService instance
   final InternetConnectionCheckerService internetConnectionCheckerService =
       InternetConnectionCheckerService();
 
+  // List of URLs to check for internet connectivity
   List<InternetConnectionOptions> optionURLs = [
     const InternetConnectionOptions(
       uri: 'https://google.com',
@@ -59,6 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
 
+    // Listen for internet connection status changes
     _streamSubscription = internetConnectionCheckerService
         .onInternetConnectionStatusChanged(optionURLs: optionURLs)
         .listen((event) {
@@ -83,13 +93,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void dispose() {
+    // Cancel the stream subscription to prevent memory leaks
     _streamSubscription?.cancel();
     super.dispose();
   }
 
-  Widget _buildContent(
-    BuildContext context,
-  ) {
+  // Build the content based on the internet connection status
+  Widget _buildContent(BuildContext context) {
     if (_lastStatus == null) {
       return Center(
         child: Text('$_lastStatus'),
