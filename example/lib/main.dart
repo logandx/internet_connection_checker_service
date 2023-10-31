@@ -47,9 +47,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<InternetConnectionOptions> optionURLs = [
     const InternetConnectionOptions(
-        uri: 'https://google.com', timeout: Duration(seconds: 20)),
+      uri: 'https://google.com',
+      timeout: Duration(seconds: 20),
+    ),
     const InternetConnectionOptions(
-        uri: 'https://bing.com', timeout: Duration(seconds: 20)),
+      uri: 'https://bing.com',
+      timeout: Duration(seconds: 20),
+    ),
   ];
 
   @override

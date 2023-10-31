@@ -52,6 +52,6 @@ final hasAccess = await internetConnectionChecker.hasInternetAccess(
 
 ## **Additional information**
 
-I conducted research on packages that rely on `connectivity_plus` and noticed that they do not accurately detect changes in internet connectivity. As a result, I decided to develop a new package inspired by `internet_connection_checker` to address these issues and provide more reliable internet connection change detection."
+I conducted research on packages that rely on `connectivity_plus` and noticed that they do not accurately detect changes in internet connectivity. As a result, I decided to develop a new package inspired by `internet_connection_checker` to address these issues and provide more reliable internet connection change detection.
 
 If you have more specific details or questions related to creating this package or need further assistance, please feel free to ask.
