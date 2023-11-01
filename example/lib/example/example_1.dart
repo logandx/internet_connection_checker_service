@@ -12,8 +12,7 @@ class Example1 extends StatefulWidget {
   State<Example1> createState() => _Example1State();
 }
 
-class _Example1State extends State<Example1>
-    with WidgetsBindingObserver {
+class _Example1State extends State<Example1> with WidgetsBindingObserver {
   StreamSubscription<InternetConnectionStatus>? _streamSubscription;
   InternetConnectionStatus? _lastStatus;
   final InternetConnectionCheckerService internetConnectionCheckerService =

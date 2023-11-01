@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.1.1
+
+- Fix dart format warnings.
+
 ## 1.1.0
 
 - Internet check list is now optional by default.
