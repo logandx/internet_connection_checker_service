@@ -22,13 +22,40 @@ through specified URLs.
 - Check the current internet connection status: disconnected or connected.
 - Determine the internet connection through specific URLs.
 
+## Platform notes
+
+Some platforms require additional steps, as detailed below.
+
+### Android
+
+Android apps must declare their use of the internet in the Android manifest (AndroidManifest.xml ):
+
+```xml
+<manifest xmlns:android...>
+ ...
+ <uses-permission android:name="android.permission.INTERNET" />
+ <application ...
+</manifest>
+```
+
+### macOS
+
+macOS apps must allow network access in the relevant .entitlements files.
+
+```entitlements
+<key>com.apple.security.network.client</key>
+<true/>
+```
+
+Learn more about [setting up entitlements](https://flutter.dev/developing-packages).
+
 ## **Usage**
 
 To use this package, make sure to include it in your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  internet_connection_checker_service: ^1.0.6
+  internet_connection_checker_service: ^1.1.0
 ```
 
 Example usage:
@@ -48,8 +75,13 @@ List<InternetConnectionOptions> optionURLs = [
   ];
 
 
+// Get the current internet connection status.
+final status = await internetConnectionChecker.connectionStatus;
+
 // Listen to changes in internet connection status.
-final subscription = internetConnectionChecker
+StreamSubscription<InternetConnectionStatus>? _streamSubscription;
+
+subscription = internetConnectionChecker
     .onInternetConnectionStatusChanged(optionURLs: optionURLs)
     .listen((status) {
   // Handle the internet connection status change.
@@ -59,6 +91,8 @@ final subscription = internetConnectionChecker
 final hasAccess = await internetConnectionChecker.hasInternetAccess(
   optionURLs: optionURLs,
 );
+
+// Note that the optionURLs parameter is optional and can be omitted.
 ```
 
 ## **Additional information**

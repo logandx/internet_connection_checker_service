@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.1.0
+
+- Internet check list is now optional by default.
+- Added `connectionStatus` getter to get the current internet connection status.
+- Added example on how to use the `connectionStatus` getter.
+
 ## 1.0.6
 
 - Fix analysis warnings.

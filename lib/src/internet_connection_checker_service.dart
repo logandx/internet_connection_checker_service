@@ -9,7 +9,8 @@ import 'internet_connection_status.dart';
 class InternetConnectionCheckerService {
   InternetConnectionCheckerService._();
 
-  /// Factory constructor to create a singleton instance of [InternetConnectionCheckerService].
+  /// Factory constructor to create a singleton instance of
+  /// [InternetConnectionCheckerService].
   ///
   /// This factory constructor ensures that only one instance of the
   /// `InternetConnectionCheckerService` is created and shared across the
@@ -21,6 +22,25 @@ class InternetConnectionCheckerService {
 
   static InternetConnectionCheckerService? _singleton;
 
+  /// Default URL to check for internet connectivity.
+  ///
+  /// This URL is used when no URLs are provided to [hasInternetAccess] method.
+  static const String _defaultURL = 'https://www.google.com';
+
+  /// Check if internet access is available.
+  ///
+  /// This method checks if internet access is available by making a request to
+  /// the default URL.
+  ///
+  /// Returns `connected` if internet access is available, otherwise returns
+  /// `disconnected`.
+  Future<InternetConnectionStatus> get connectionStatus async {
+    final hasAccess = await hasInternetAccess();
+    return hasAccess
+        ? InternetConnectionStatus.connected
+        : InternetConnectionStatus.disconnected;
+  }
+
   /// Check if internet access is available through specified URLs.
   ///
   /// This method takes a list of [InternetConnectionOptions] and checks if
@@ -29,17 +49,21 @@ class InternetConnectionCheckerService {
   /// Returns `true` if internet access is available through all specified URLs,
   /// otherwise returns `false`.
   Future<bool> hasInternetAccess({
-    required List<InternetConnectionOptions> optionURLs,
+    List<InternetConnectionOptions>? optionURLs,
   }) async {
-    if (optionURLs.isNotEmpty) {
+    if (optionURLs != null && optionURLs.isNotEmpty) {
       final result = await Future.wait(
         optionURLs.map(
           (option) => _hasReachabilityNetwork(option),
         ),
       );
       return result.every((element) => element == true);
+    } else {
+      /// If no URLs are provided, use the default URL.
+      return _hasReachabilityNetwork(
+        InternetConnectionOptions(uri: _defaultURL),
+      );
     }
-    return true;
   }
 
   /// Stream that emits changes in internet connection status.
@@ -47,7 +71,7 @@ class InternetConnectionCheckerService {
   /// This stream provides real-time updates on the internet connection status.
   /// When the status changes, it emits the new status.
   Stream<InternetConnectionStatus> onInternetConnectionStatusChanged({
-    required List<InternetConnectionOptions> optionURLs,
+    List<InternetConnectionOptions>? optionURLs,
   }) async* {
     final sourceStream = Connectivity()
         .onConnectivityChanged
