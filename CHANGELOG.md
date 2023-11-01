@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.1.2
+
+- Fix typos.
+
 ## 1.1.1
 
 - Fix dart format warnings.

@@ -55,7 +55,7 @@ To use this package, make sure to include it in your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  internet_connection_checker_service: ^1.1.1
+  internet_connection_checker_service: ^1.1.2
 ```
 
 Example usage:
@@ -81,7 +81,7 @@ final status = await internetConnectionChecker.connectionStatus;
 // Listen to changes in internet connection status.
 StreamSubscription<InternetConnectionStatus>? _streamSubscription;
 
-subscription = internetConnectionChecker
+_streamSubscription = internetConnectionChecker
     .onInternetConnectionStatusChanged(optionURLs: optionURLs)
     .listen((status) {
   // Handle the internet connection status change.
