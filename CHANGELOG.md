@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.1.3
+
+- Add pub badge.
+
 ## 1.1.2
 
 - Fix typos.

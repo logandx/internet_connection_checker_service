@@ -10,6 +10,7 @@ For general information about developing packages, see the Dart guide for
 and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages).
 -->
+[![Pub](https://img.shields.io/pub/v/internet_connection_checker_service.svg)](https://pub.dev/packages/internet_connection_checker_service)
 
 # **Introduction**
 
@@ -55,7 +56,7 @@ To use this package, make sure to include it in your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  internet_connection_checker_service: ^1.1.2
+  internet_connection_checker_service: ^1.1.3
 ```
 
 Example usage:
