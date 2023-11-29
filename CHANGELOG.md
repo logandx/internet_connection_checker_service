@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.1.4+1
+
+- Change version in README.md.
+
 ## 1.1.4
 
 - Expose source stream.

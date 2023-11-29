@@ -56,7 +56,7 @@ To use this package, make sure to include it in your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  internet_connection_checker_service: ^1.1.3
+  internet_connection_checker_service: ^1.1.4+1
 ```
 
 Example usage:
