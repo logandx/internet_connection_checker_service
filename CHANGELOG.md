@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.1.4
+
+- Expose source stream.
+- Resolved link to example not found.
+- Update dependencies.
+
 ## 1.1.3
 
 - Add pub badge.

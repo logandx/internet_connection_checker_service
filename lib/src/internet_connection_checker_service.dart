@@ -73,10 +73,7 @@ class InternetConnectionCheckerService {
   Stream<InternetConnectionStatus> onInternetConnectionStatusChanged({
     List<InternetConnectionOptions>? optionURLs,
   }) async* {
-    final sourceStream = Connectivity()
-        .onConnectivityChanged
-        .map(_mapInternetConnectionStatus)
-        .asBroadcastStream();
+    final sourceStream = connectivityStream();
     await for (final event in sourceStream) {
       switch (event) {
         case InternetConnectionStatus.connected:
@@ -92,6 +89,20 @@ class InternetConnectionCheckerService {
           break;
       }
     }
+  }
+
+  /// The source stream will be used by [onInternetConnectionStatusChanged]
+  /// stream.
+  ///
+  /// Returns asBroadcastStream. This is crucial when you have multiple
+  /// components or parts of your application interested in the same stream of
+  /// events without causing interference between them.
+  Stream<InternetConnectionStatus> connectivityStream() {
+    final sourceStream = Connectivity()
+        .onConnectivityChanged
+        .map(_mapInternetConnectionStatus)
+        .asBroadcastStream();
+    return sourceStream;
   }
 
   /// Check internet access by making a request to a URL.
