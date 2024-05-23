@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker_service/internet_connection_checker_service.dart';
 
+/// Try to turn off the internet connection and see the result.
 class Example3 extends StatefulWidget {
   const Example3({
     super.key,

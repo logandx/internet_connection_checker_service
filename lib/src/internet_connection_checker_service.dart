@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 
@@ -60,7 +58,7 @@ class InternetConnectionCheckerService {
       return result.every((element) => element == true);
     } else {
       /// If no URLs are provided, use the default URL.
-      return _hasReachabilityNetwork(
+      return await _hasReachabilityNetwork(
         InternetConnectionOptions(uri: _defaultURL),
       );
     }
@@ -73,20 +71,12 @@ class InternetConnectionCheckerService {
   Stream<InternetConnectionStatus> onInternetConnectionStatusChanged({
     List<InternetConnectionOptions>? optionURLs,
   }) async* {
-    final sourceStream = connectivityStream();
-    await for (final event in sourceStream) {
-      switch (event) {
-        case InternetConnectionStatus.connected:
-          final hasAccess = await hasInternetAccess(optionURLs: optionURLs);
-          if (hasAccess) {
-            yield event;
-          } else {
-            yield InternetConnectionStatus.disconnected;
-          }
-          break;
-        case InternetConnectionStatus.disconnected:
-          yield InternetConnectionStatus.disconnected;
-          break;
+    await for (final event in connectivityStream()) {
+      if (event == InternetConnectionStatus.connected) {
+        final hasAccess = await hasInternetAccess(optionURLs: optionURLs);
+        yield hasAccess ? event : InternetConnectionStatus.disconnected;
+      } else {
+        yield InternetConnectionStatus.disconnected;
       }
     }
   }
@@ -98,11 +88,10 @@ class InternetConnectionCheckerService {
   /// components or parts of your application interested in the same stream of
   /// events without causing interference between them.
   Stream<InternetConnectionStatus> connectivityStream() {
-    final sourceStream = Connectivity()
+    return Connectivity()
         .onConnectivityChanged
         .map(_mapInternetConnectionStatus)
         .asBroadcastStream();
-    return sourceStream;
   }
 
   /// Check internet access by making a request to a URL.
@@ -124,15 +113,14 @@ class InternetConnectionCheckerService {
   ///
   /// Returns the corresponding [InternetConnectionStatus] based on the [event].
   InternetConnectionStatus _mapInternetConnectionStatus(
-    ConnectivityResult event,
+    List<ConnectivityResult> connectivityResults,
   ) {
-    switch (event) {
-      case ConnectivityResult.wifi:
-      case ConnectivityResult.ethernet:
-      case ConnectivityResult.mobile:
-        return InternetConnectionStatus.connected;
-      default:
-        return InternetConnectionStatus.disconnected;
-    }
+    return connectivityResults.any((result) => [
+              ConnectivityResult.wifi,
+              ConnectivityResult.mobile,
+              ConnectivityResult.ethernet
+            ].contains(result))
+        ? InternetConnectionStatus.connected
+        : InternetConnectionStatus.disconnected;
   }
 }

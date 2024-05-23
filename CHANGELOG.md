@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.1.5
+
+- Update dependencies.
+- Refactor some logics in internet_connection_checker_service.dart.
+
 ## 1.1.4+1
 
 - Change version in README.md.

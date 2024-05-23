@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:example/example/example.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker_service/internet_connection_checker_service.dart';
 
@@ -16,7 +17,7 @@ class HomePage extends StatelessWidget {
     return const MaterialApp(
       // More examples see:
       // https://github.com/logandx/internet_connection_checker_service/tree/main/example/lib/example
-      home: Example1(),
+      home: Example3(),
     );
   }
 }
@@ -43,7 +44,7 @@ class _Example1State extends State<Example1> with WidgetsBindingObserver {
       timeout: Duration(seconds: 20),
     ),
     const InternetConnectionOptions(
-      uri: 'https://bing.com',
+      uri: 'https://youtube.com',
       timeout: Duration(seconds: 20),
     ),
   ];
