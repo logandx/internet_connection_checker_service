@@ -58,9 +58,10 @@ class InternetConnectionCheckerService {
       return result.every((element) => element == true);
     } else {
       /// If no URLs are provided, use the default URL.
-      return await _hasReachabilityNetwork(
+      final result = await _hasReachabilityNetwork(
         InternetConnectionOptions(uri: _defaultURL),
       );
+      return result;
     }
   }
 

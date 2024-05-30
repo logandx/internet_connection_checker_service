@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.1.5+1
+
+- Refactor hasInternetAccess method.
+
 ## 1.1.5
 
 - Update dependencies.
